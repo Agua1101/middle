@@ -64,7 +64,7 @@ initHeaderOperate();</script>
 <div class="logo_line">
     <div class="w960">
         <div class="shopping_procedure"><span class="current">我的购物车</span><span>填写订单</span><span>完成订单</span></div>
-        <div class="logo"><a href="#"><img src="{% static 'images/bz_logo_car.jpg' %}" alt=""></a></div>
+        <div class="logo"><a href="{% url 'dangdangapp:index' %}"><img src="{% static 'images/bz_logo_car.jpg' %}" alt=""></a></div>
     </div>
 </div>
 <div class="add_line" id="district">
@@ -160,6 +160,7 @@ initHeaderOperate();</script>
 
             <div class="shopping_list">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="carcar">
+{#-----------------------------------------------------购物车-------------------------------------------------------------------------#}
                     {% for f in book %}
 {#                        {{ f.book.id }}#}
                         <tbody data-stock="22388" data-offline="false" data-productid="24147882"
@@ -173,7 +174,7 @@ initHeaderOperate();</script>
                                                                         src="{% static f.book.pic_path %}"
                                                                         width="80" height="80"> </a>
                                 <div style="display: none;" class="img_big"><a
-                                        href="http://product.dangdang.com/24147882.html" dd_name="查看详情" target="_blank"><img
+                                        href="{% url 'dangdangapp:book_details' %}?book={{ f.book.id }}" dd_name="查看详情" target="_blank"><img
                                         src="{% static f.book.pic_path %}"></a><span class="arrow"></span>
                                 </div>
                             </td>
@@ -259,7 +260,7 @@ initHeaderOperate();</script>
                                                                         src="{% static f.book.pic_path %}"
                                                                         width="80" height="80"> </a>
                                 <div style="display: none;" class="img_big"><a
-                                        href="http://product.dangdang.com/24147882.html" dd_name="查看详情" target="_blank"><img
+                                        href="{% url 'dangdangapp:book_details' %}?book={{ f.book.id }}" dd_name="查看详情" target="_blank"><img
                                         src="{% static f.book.pic_path %}"></a><span class="arrow"></span>
                                 </div>
                             </td>
@@ -328,7 +329,7 @@ initHeaderOperate();</script>
         <div class="shopping_total_left" id="J_leftBar">
             <a id="j_selectall2" href="javascript:void(0)" class="checknow fn-checkall check_on" dd_name="全选">选中</a>全选
             <a id="j_removeproducts" href="javascript:void(0)" class="fn-batch-remove" dd_name="批量删除按钮">批量删除</a>
-            <span>已选择<font color="red">2</font>件商品</span>
+            <span>已选择<font color="red" id="count_num">{{ n }}</font>件商品</span>
             <div id="J_batchRemoveProductBox" style="display: none;z-index:-1;left:0px;" class="pop_del"><p>
                 您确定要批量删除商品吗？</p><a href="javascript:;" class="pop_btn fn-confirm-batchremovebox">确定</a><a
                     href="javascript:;" class="pop_btn fn-close-batchremovebox">取消</a></div>
@@ -405,6 +406,7 @@ initHeaderOperate();</script>
         total = document.getElementById('total');
         total1 = document.getElementById('payAmount');
         save = document.getElementById('totalFavor');
+        count_num = document.getElementById('count_num');
         {#total.innerText = '¥'+ (parseFloat(total)+ parseFloat(dang_price));#}
         $.ajax({
             type:"GET",
@@ -414,10 +416,12 @@ initHeaderOperate();</script>
                 result = msg['result'];
                 result1 = msg['to'];
                 result2 = msg['sa'];
+                numm = msg['n'];
                 if (result === 1){
                     total.innerText = '¥'+result1;
                     total1.innerText = '¥'+result1;
-                    save.innerText = '¥'+result2
+                    save.innerText = '¥'+result2;
+                    count_num.innerText = numm
 
                 }
 
@@ -436,6 +440,7 @@ initHeaderOperate();</script>
             total = document.getElementById('total');
             total1 = document.getElementById('payAmount');
             save = document.getElementById('totalFavor');
+            count_num = document.getElementById('count_num');
             {#total.innerText = '¥'+ (parseFloat(total)+ parseFloat(dang_price));#}
 
             $.ajax({
@@ -446,11 +451,13 @@ initHeaderOperate();</script>
                     result = msg['result'];
                     result1 = msg['to'];
                     result2 = msg['sa'];
+                    numm = msg['n'];
                     if (result === 1){
 
                         total.innerText = '¥'+result1;
                         total1.innerText = '¥'+result1;
-                        save.innerText = '¥'+result2
+                        save.innerText = '¥'+result2;
+                        count_num.innerText = numm
 
                     }
 
@@ -626,6 +633,7 @@ initHeaderOperate();</script>
             total = document.getElementById('total');
             total1 = document.getElementById('payAmount');
             save = document.getElementById('totalFavor');
+            count_num = document.getElementById('count_num');
             {#total.innerText = '¥'+ (parseFloat(total)+ parseFloat(dang_price));#}
 
             $.ajax({
@@ -636,10 +644,12 @@ initHeaderOperate();</script>
                     result = msg['result'];
                     result1 = msg['to'];
                     result2 = msg['sa'];
+                    numm = msg['n'];
                     if (result === 1){
                         total.innerText = '¥'+result1;
                         total1.innerText = '¥'+result1;
-                        save.innerText = '¥'+result2
+                        save.innerText = '¥'+result2;
+                        count_num.innerText = numm
 
                     }
 
@@ -653,6 +663,7 @@ initHeaderOperate();</script>
             total = document.getElementById('total');
             total1 = document.getElementById('payAmount');
             save = document.getElementById('totalFavor');
+            count_num = document.getElementById('count_num');
             {#total.innerText = '¥'+ (parseFloat(total)+ parseFloat(dang_price));#}
 
             $.ajax({
@@ -663,10 +674,12 @@ initHeaderOperate();</script>
                     result = msg['result'];
                     result1 = msg['to'];
                     result2 = msg['sa'];
+                    numm = msg['n'];
                     if (result === 1){
                         total.innerText = '¥'+result1;
                         total1.innerText = '¥'+result1;
-                        save.innerText = '¥'+result2
+                        save.innerText = '¥'+result2;
+                        count_num.innerText = numm
 
                     }
 

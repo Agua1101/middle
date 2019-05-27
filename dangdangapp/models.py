@@ -21,8 +21,8 @@ class DCategory(models.Model):
 
 class DOrderiterm(models.Model):
     shop_id = models.IntegerField(primary_key=True)
-    shop_bookid = models.ForeignKey('TBook', models.DO_NOTHING, db_column='shop_bookid', blank=True, null=True)
-    shop_ordid = models.ForeignKey('TOrder', models.DO_NOTHING, db_column='shop_ordid', blank=True, null=True)
+    shop_bookid = models.IntegerField(blank=True, null=True)
+    shop_ordid = models.IntegerField(blank=True, null=True)
     shop_num = models.IntegerField(blank=True, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
@@ -71,7 +71,8 @@ class TBook(models.Model):
     t_index = models.TextField(blank=True, null=True)
     t_media = models.TextField(blank=True, null=True)
     t_illustration = models.TextField(blank=True, null=True)
-    book_category = models.ForeignKey(DCategory, models.DO_NOTHING, db_column='book_category', blank=True, null=True)
+    # book_category = models.ForeignKey(DCategory, models.DO_NOTHING, db_column='book_category', blank=True, null=True)
+    book_category = models.IntegerField(blank=True, null=True)
     pic_path = models.TextField(blank=True, null=True)
     series_name = models.CharField(max_length=200, blank=True, null=True)
     customer_socre = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -85,11 +86,11 @@ class TBook(models.Model):
 
 class TOrder(models.Model):
     id = models.IntegerField(primary_key=True)
-    num = models.CharField(max_length=20, blank=True, null=True)
+    num = models.CharField(max_length=200, blank=True, null=True)
     create_time = models.CharField(max_length=20, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    order_addrid = models.ForeignKey(TAddress, models.DO_NOTHING, db_column='order_addrid', blank=True, null=True)
-    order_uid = models.ForeignKey('TUser', models.DO_NOTHING, db_column='order_uid', blank=True, null=True)
+    order_addrid = models.IntegerField(blank=True, null=True)
+    order_uid = models.IntegerField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
 
     class Meta:

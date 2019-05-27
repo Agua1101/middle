@@ -8,23 +8,33 @@ from dangdangapp.models import TBook
 
 
 def car(request):
-    try:
+    # try:
         name = request.session.get("judge")
         cart = request.session.get('cart')
         re_cart = request.session.get('re_cart')
+        if not cart:
+            return render(request,'car.html')
         book = cart.cartItem
+        n = 0
+        for i in book:
+            n += i.amount
+        if not re_cart:
+            save_price = cart.save_price
+            total_price = cart.total_price
+            return render(request,'car.html',{'book':book,'save_price':save_price,'total_price':total_price,'name':name,'n':n})
         del_book = re_cart.cartItem_del
         # print(book)
         save_price = cart.save_price
         total_price = cart.total_price
-        return render(request,'car.html',{'book':book,'save_price':save_price,'total_price':total_price,'del_book':del_book,'name':name})
-    except:
-        name = request.session.get("judge")
-        cart = request.session.get('cart')
-        book = cart.cartItem
-        save_price = cart.save_price
-        total_price = cart.total_price
-        return render(request,'car.html',{'book':book,'save_price':save_price,'total_price':total_price,'name':name})
+        return render(request,'car.html',{'book':book,'save_price':save_price,'total_price':total_price,'del_book':del_book,'name':name,'n':n})
+    # except:
+        # cart = Cart()
+        # name = request.session.get("judge")
+        # cart = request.session.get('cart')
+        # book = cart.cartItem
+        # save_price = cart.save_price
+        # total_price = cart.total_price
+        # return render(request,'car.html')
 
 def add_book(request):
     time.sleep(1)
@@ -51,9 +61,13 @@ def change_num(request):
     cart = request.session.get('cart')
     cart.add_book_toCart(bookid, amount)
     request.session['cart'] = cart
+    book = cart.cartItem
+    n = 0
+    for i in book:
+        n += i.amount
     to = cart.total_price
     sa = cart.save_price
-    return JsonResponse({'result':1,'to':to,'sa':sa})
+    return JsonResponse({'result':1,'to':to,'sa':sa,'n':n})
 
 def del_num(request):
     bookid = request.GET.get('bookid')
@@ -98,9 +112,13 @@ def update_book(request):
         cart.change_book(bookid, amount)
         request.session['cart'] = cart
 
+    book = cart.cartItem
+    n = 0
+    for i in book:
+        n += i.amount
     to = cart.total_price
     sa = cart.save_price
-    return JsonResponse({'result': 1, 'to': to, 'sa': sa})
+    return JsonResponse({'result': 1, 'to': to, 'sa': sa,'n':n})
 
 def recover(request):
     bookid = request.GET.get('bookid')

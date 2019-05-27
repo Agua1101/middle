@@ -59,8 +59,8 @@
     <div class="logo_line" dd_name="搜索框">
                   <div class="logo"><img src="{% static 'images/DDlogoNEW.gif' %}" usemap="#logo_link"/>
         <map name="logo_link" id="logo_link" dd_name="logo区">
-                      <area shape="rect" coords="0,18,200,93" href="http://www.dangdang.com" title="当当" onfocus="this.blur();">
-                      <area shape="rect" coords="200,18,320,93" href="http://www.dangdang.com/" title="" target="_blank" onfocus="this.blur();">
+                      <area shape="rect" coords="0,18,200,93" href="{% url 'dangdangapp:index' %}" title="当当" onfocus="this.blur();">
+                      <area shape="rect" coords="200,18,320,93" href="{% url 'dangdangapp:index' %}" title="" target="_blank" onfocus="this.blur();">
                     </map>
       </div>
                   <div class="search">

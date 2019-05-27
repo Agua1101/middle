@@ -68,8 +68,8 @@
     <div class="logo_line" dd_name="搜索框">
       <div class="logo"><img src="{% static 'images/DDlogoNEW.gif' %}" usemap="#logo_link"/>
         <map name="logo_link" id="logo_link" dd_name="logo区">
-          <area shape="rect" coords="0,18,200,93" href="http://www.dangdang.com" title="当当" onfocus="this.blur();">
-          <area shape="rect" coords="200,18,320,93" href="http://www.dangdang.com/" title="" target="_blank" onfocus="this.blur();">
+          <area shape="rect" coords="0,18,200,93" href="{% url 'dangdangapp:index' %}" title="当当" onfocus="this.blur();">
+          <area shape="rect" coords="200,18,320,93" href="{% url 'dangdangapp:index' %}" title="" target="_blank" onfocus="this.blur();">
         </map>
       </div>
       <div class="search">
@@ -398,7 +398,7 @@
             <ul class="slides_container clearfix">
 {#-----------------------------------------------------新书上架---------------------------------------------#}
               <li  >
-                  {% for i in book %}
+                  {% for i in book_d %}
                       <dl class="clearfix">
                       <dt><a class="img" href="{% url 'dangdangapp:book_details' %}?book={{ i.id }}&cate={{ s_cate.category }}" target="_blank"><img src="{% static i.pic_path %}" alt=""></a></dt>
                       <dd>
@@ -448,14 +448,15 @@
         <div class="bor_list_con">
           <div  id="con_two_1" style="display:block;" >
             <ul class="list01">
+{#----------------------------------------------------新书热卖榜-----------------------------------------------------------------#}
                 {% for c in book %}
                     {% if c.id < 9 %}
                         <li class="active"> <span class="num num1">{{ c.id }}</span>
-                            <div> <a class="list_name" href="">{{ c.book_name }}</a>
+                            <div> <a class="list_name" href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}">{{ c.book_name }}</a>
                               <dl class="list_con clearfix">
-                                <dt><a href=""><img src="{% static c.pic_path %}" /></a></dt>
+                                <dt><a href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}"><img src="{% static c.pic_path %}" /></a></dt>
                                 <dd>
-                                  <p class="name"><a href="#">{{ c.book_name }}</a></p>
+                                  <p class="name"><a href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}">{{ c.book_name }}</a></p>
                                   <b>￥{{ c.dang_price }}</b><em>￥{{ c.market_price }}</em><a class="pl" href="#">112条评论</a></dd>
                               </dl>
                             </div>
@@ -496,7 +497,8 @@
           <div class="auto1 clearfix" >
             <ul class="slides_container clearfix">
               <li>
-                  {% for j in book %}
+{#--------------------------------------------------------------主编推荐-------------------------------------------------------#}
+                  {% for j in book_v %}
                       <dl class="clearfix">
                       <dt><a class="img" href="{% url 'dangdangapp:book_details' %}" target="_blank"><img src="{% static j.pic_path %}" alt=""></a></dt>
                       <dd>
@@ -526,14 +528,15 @@
         <div class="bor_list_con">
           <div id="con_four_1">
             <ul class="list01">
+{#----------------------------------------------------------------------新书热卖2------------------------------------------------------#}
                 {% for c in book %}
                     {% if c.id < 9 %}
                         <li class="active"> <span class="num num1">{{ c.id }}</span>
-                            <div> <a class="list_name" href="">{{ c.book_name }}</a>
+                            <div> <a class="list_name" href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}">{{ c.book_name }}</a>
                               <dl class="list_con clearfix">
-                                <dt><a href=""><img src="{% static c.pic_path %}" /></a></dt>
+                                <dt><a href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}"><img src="{% static c.pic_path %}" /></a></dt>
                                 <dd>
-                                  <p class="name"><a href="#">{{ c.book_name }}</a></p>
+                                  <p class="name"><a href="{% url 'dangdangapp:book_details' %}?book={{ c.id }}&cate={{ s_cate.category }}">{{ c.book_name }}</a></p>
                                   <b>￥{{ c.dang_price }}</b><em>￥{{ c.market_price }}</em><a class="pl" href="#">112条评论</a></dd>
                               </dl>
                             </div>

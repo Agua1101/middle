@@ -22,61 +22,77 @@ def login(request):
     #     request.session["judge"] = name
     #     return redirect('dangdangapp:index')
     name = request.session.get('judge')
-    user = TUser.objects.filter(t_email=name)[0]
-    state = user.status
-    if name and state:
-        if position == 'index':
-            return redirect('dangdangapp:index')
-        elif position == 'booklist':
+    if name:
+        user = TUser.objects.filter(t_email=name)[0]
+        state = user.status
+        if name and state:
+            if position == 'index':
+                return redirect('dangdangapp:index')
+            elif position == 'booklist':
 
-            return redirect('dangdangapp:book_list')
-        elif position == 'bookdetails':
+                return redirect('dangdangapp:book_list')
+            elif position == 'bookdetails':
 
-            return redirect('dangdangapp:book_list')
-        elif position == 'indent':
+                return redirect('dangdangapp:book_list')
+            elif position == 'indent':
 
-            return redirect('dangdangapp:indent')
+                return redirect('dangdangapp:indent')
 
         return redirect('dangdangapp:index')
     return render(request, 'login.html', {'position':position})
 
 def login_logic(request):
-    try:
-        position = request.GET.get('position')
-        print('login_logic:',position)
+    # try:
+        position = request.POST.get('position')
+        # print('login_logic:',position)
         book = TBook.objects.all()
         cate = DCategory.objects.all()
         email = request.POST.get('txtUsername')
         pwd = request.POST.get('txtPassword')
-        TUser.objects.filter(t_email=email, password=pwd)
-        request.session["judge"] = email
-        if position == 'index':
-            res = redirect('dangdangapp:index')
-            res.set_cookie("name", email)
-            res.set_cookie("password", pwd)
-            return res
-        elif position == 'booklist':
-            res = redirect('dangdangapp:book_list')
-            res.set_cookie("name", email)
-            res.set_cookie("password", pwd)
-            return res
-        elif position == 'bookdetails':
-            res = redirect('dangdangapp:book_details')
-            res.set_cookie("name", email)
-            res.set_cookie("password", pwd)
-            return res
-        elif position == 'indent':
-            res = redirect('dangdangapp:indent')
-            res.set_cookie("name", email)
-            res.set_cookie("password", pwd)
-            return res
+        captcha = request.POST.get('txt_vcode')  # 获取输入的验证码
+        code = request.session.get('code')  # 获取生成的验证码
+
+        match = re.search('(^\w*@\w*\.\w*)|(^1{1}\d{10}$)', email)
+        match_pwd = re.match('\w{8}', pwd)
+        user = TUser.objects.filter(t_email=email, password=pwd)
+        static = user[0].status
+        if not match:
+            return JsonResponse({'check_false': 3})
+        elif not match_pwd:
+            return JsonResponse({'check_false': 4})
+        elif captcha.upper() != code.upper():
+            return JsonResponse({'check_false': 2})
+        elif not user:
+            return JsonResponse({'check_false': 5})
+        elif static == 1:
+            request.session["judge"] = email
+            if position == 'index':
+                # res = redirect('dangdangapp:index')
+                # res.set_cookie("name", email)
+                # res.set_cookie("password", pwd)
+                return JsonResponse({'result':'index'})
+            elif position == 'booklist':
+                # res = redirect('dangdangapp:book_list')
+                # res.set_cookie("name", email)
+                # res.set_cookie("password", pwd)
+                return JsonResponse({'result': 'booklist'})
+            elif position == 'bookdetails':
+                # res = redirect('dangdangapp:book_details')
+                # res.set_cookie("name", email)
+                # res.set_cookie("password", pwd)
+                return JsonResponse({'result': 'bookdetails'})
+            elif position == 'indent':
+                # res = redirect('dangdangapp:indent')
+                # res.set_cookie("name", email)
+                # res.set_cookie("password", pwd)
+                return JsonResponse({'result': 'indent'})
         # res = render(request,'index.html',{'book':book,'cate':cate,'name':email})
         # res.set_cookie("name", email)
         # res.set_cookie("password", pwd)
         # return res
         # return redirect('userapp:emplist')
-    except:
-        return redirect('userapp:login')
+    # except:
+    #     return redirect('userapp:login')
 
 
 def register(request):

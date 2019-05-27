@@ -27,9 +27,9 @@
     <div class="ddnewhead_content ddnewhead_content2">
         <div class="ddnewhead_operate" id="__ddnav_menu">
           
-          <p id="nickname">欢迎光临当当网，请<a name="ddnav_login" href="https://login.dangdang.com/signin.aspx?returnurl=https%3A//login.dangdang.com/register.php%3Freturnurl%3Dhttp%3A//book.dangdang.com/" target="_self" class="login_link">登录</a><a name="ddnav_register" href="https://login.dangdang.com/Register.aspx" target="_self" class="login_link">免费注册</a></p>
+{#          <p id="nickname">欢迎光临当当网，请<a name="ddnav_login" href="https://login.dangdang.com/signin.aspx?returnurl=https%3A//login.dangdang.com/register.php%3Freturnurl%3Dhttp%3A//book.dangdang.com/" target="_self" class="login_link">登录</a><a name="ddnav_register" href="https://login.dangdang.com/Register.aspx" target="_self" class="login_link">免费注册</a></p>#}
     </div>
-              <div class="ddnewhead_logo"><a href="http://www.dangdang.com" title="返回首页" name="ddnav_logo"><img src="{% static 'images/zc_logo.jpg' %}" alt="百知网"></a></div>
+              <div class="ddnewhead_logo"><a href="{% url 'dangdangapp:index' %}" title="返回首页" name="ddnav_logo"><img src="{% static 'images/zc_logo.jpg' %}" alt="百知网"></a></div>
       <div class="clear"></div>
     </div>
      <div class="ddnewcarthead_bottom"></div>
